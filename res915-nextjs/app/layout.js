@@ -1,8 +1,8 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'res915',
-  description: 'Real Estate Solutions 915',
+  title: 'RES915',
+  description: 'Real estate solutions',
 };
 
 export default function RootLayout({ children }) {
@@ -12,4 +12,3 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
-
