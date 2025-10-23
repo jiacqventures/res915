@@ -177,7 +177,6 @@ export default function Home() {
     });
 
     btn.disabled = false;
-
     if (res.ok) {
       alert("✅ Message sent successfully!");
       form.reset();
@@ -185,8 +184,8 @@ export default function Home() {
       alert("❌ Something went wrong. Please try again.");
     }
   }}
-  className="rounded-2xl bg-white p-6 shadow-sm border"
->
+  className="rounded-2xl bg-white p-6 shadow-sm border">
+    
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label={i18n.fields.name} value={form.name} onChange={(v) => updateField('name', v)} />
             <Field label={i18n.fields.email} value={form.email} onChange={(v) => updateField('email', v)} />
