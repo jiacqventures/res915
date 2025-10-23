@@ -90,32 +90,6 @@ export default function Home() {
 
   function updateField(k, v) { setForm((f) => ({ ...f, [k]: v })); }
 
-  function sendEmail(e) {
-    e.preventDefault();
-    const subject =
-      (lang === 'en' ? 'Cash Offer Request – ' : 'Solicitud de Oferta – ') +
-      (form.address || 'Property');
-    const bodyLines = [
-      `Name/Nombre: ${form.name}`,
-      `Email: ${form.email}`,
-      `Phone/Teléfono: ${form.phone}`,
-      `Address/Dirección: ${form.address}`,
-      `City/Ciudad: ${form.city}`,
-      `State/Estado: ${form.state}`,
-      `ZIP/Código Postal: ${form.zip}`,
-      `Condition/Condición: ${form.condition}`,
-      `Timeline/Tiempo: ${form.timeline}`,
-      `Asking Price/Precio Deseado: ${form.price}`,
-      '',
-      'Notes/Notas:',
-      form.notes,
-    ];
-    const mailto = `mailto:jiacqventures@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
-    window.location.href = mailto;
-  }
-
-  return (
-    <main className="min-h-screen bg-neutral-100 text-neutral-900">
       {/* Header */}
       <header className="max-w-6xl mx-auto px-4 py-5 flex items-center justify-between">
         <div className="text-2xl font-extrabold tracking-tight">RES915</div>
@@ -188,7 +162,31 @@ export default function Home() {
 
       {/* Offer Form */}
       <section id="offer" className="max-w-6xl mx-auto px-4 pb-10">
-        <form onSubmit={sendEmail} className="rounded-2xl bg-white p-6 shadow-sm border">
+<form
+  action="/api/contact"
+  method="POST"
+  onSubmit={async (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const btn = form.querySelector("button[type=submit]");
+    btn.disabled = true;
+
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      body: new FormData(form),
+    });
+
+    btn.disabled = false;
+
+    if (res.ok) {
+      alert("✅ Message sent successfully!");
+      form.reset();
+    } else {
+      alert("❌ Something went wrong. Please try again.");
+    }
+  }}
+  className="rounded-2xl bg-white p-6 shadow-sm border"
+>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label={i18n.fields.name} value={form.name} onChange={(v) => updateField('name', v)} />
             <Field label={i18n.fields.email} value={form.email} onChange={(v) => updateField('email', v)} />
