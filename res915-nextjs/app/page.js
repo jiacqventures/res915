@@ -10,7 +10,7 @@ export default function Home() {
     condition: '', timeline: '', price: '',
     notes: '',
   });
-
+  
   const i18n = {
     en: {
       brand: 'RES915',
