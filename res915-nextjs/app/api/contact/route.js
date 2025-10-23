@@ -23,5 +23,5 @@ ${entries.notes}
 
   // Redirect to open user's email app
   const mailto = `mailto:jiacqventures@gmail.com?subject=${subject}&body=${body}`;
-  return Response.redirect(mailto);
+return Response.redirect(mailto, 302);
 }
