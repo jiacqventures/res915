@@ -39,7 +39,7 @@ export default function Home() {
       faqTitle: 'FAQ',
       faqs: [
         { q: 'Do I need to clean or repair?', a: 'No. We buy as-is and handle everything after closing.' },
-        { q: 'How fast can we close?', a: 'Often 7–14 days, or on your preferred date.' },
+        { q: 'How fast can we close?', a: 'Often on your preferred date!.' },
         { q: 'Are there any fees or commissions?', a: 'No agent fees or hidden costs.' },
       ],
       fields: {
