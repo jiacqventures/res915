@@ -42,9 +42,8 @@ export default function Home() {
         condition: 'Property Condition', timeline: 'Selling Timeline', price: 'Asking Price',
         notes: 'Tell us about the property',
       },
-      note:
-        "This sends us an email. No account needed. (jiacqventures@gmail.com) — Your email app will open with all the info pre-filled. Just hit Send.",
-      footer: `© ${new Date().getFullYear()} RES915. All rights reserved.`,
+    note: "This sends us an email. No account needed. (jiacqventures@gmail.com) — Your email app will open with all the info pre-filled. Just hit Send.",
+footer: `© ${new Date().getFullYear()} RES915. All rights reserved.`,
     },
     es: {
       brand: 'RES915',
@@ -76,9 +75,8 @@ export default function Home() {
         condition: 'Condición de la Propiedad', timeline: 'Tiempo para Vender', price: 'Precio Deseado',
         notes: 'Cuéntanos sobre la propiedad',
       },
-      note:
-        "Esto nos envía un correo. No necesitas cuenta. (jiacqventures@gmail.com) — Tu app de correo se abrirá con todo pre-llenado. Solo envíalo.",
-      footer: `© ${new Date().getFullYear()} RES915. Todos los derechos reservados.`,
+note: "Esto nos envía un correo. No necesitas cuenta. (jiacqventures@gmail.com) — Tu app de correo se abrirá con toda la info pre-llenada. Solo pulsa Enviar.",
+footer: `© ${new Date().getFullYear()} RES915. Todos los derechos reservados.`,
     },
   }[lang];
 
