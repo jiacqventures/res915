@@ -196,6 +196,17 @@ export default function Home() {
           </button>
         </form>
       </section>
+ {/* About Section */}
+<section className="max-w-6xl mx-auto px-4 py-12 text-center">
+  <h2 className="text-2xl font-bold mb-4">About RES915</h2>
+  <p className="text-neutral-600 text-base leading-relaxed max-w-3xl mx-auto">
+    At RES915, we understand how stressful and time-consuming selling a house can be.
+    That’s why we’ve made it our mission to offer fast, fair, and reliable cash offers
+    without the headaches of repairs, commissions, or waiting months for buyers.
+    Whether you’re facing foreclosure, relocating, or simply want a quick and easy sale —
+    we’re here to help every step of the way.
+  </p>
+</section>
 
       {/* FAQ */}
       <section className="max-w-6xl mx-auto px-4 pb-12">
