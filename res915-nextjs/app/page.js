@@ -158,44 +158,48 @@ export default function Home() {
 
       {/* Offer Form */}
       <section id="offer" className="max-w-6xl mx-auto px-4 pb-10">
-        <form
-          action="/api/contact"
-          method="POST"
-          onSubmit={async (e) => {
-            e.preventDefault();
-            const formEl = e.currentTarget;
-            const btn = formEl.querySelector("button[type=submit]");
-            btn.disabled = true;
+      <form
+  onSubmit={(e) => {
+    e.preventDefault();
 
-            const res = await fetch("/api/contact", {
-              method: "POST",
-              body: new FormData(formEl),
-            });
+    const data = new FormData(e.target);
+    const entries = Object.fromEntries(data.entries());
 
-            btn.disabled = false;
-            if (res.ok) {
-              alert("✅ Message sent successfully!");
-              formEl.reset();
-            } else {
-              alert("❌ Something went wrong. Please try again.");
-            }
-          }}
-          className="rounded-2xl bg-white p-6 shadow-sm border"
-        >
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {Object.entries(i18n.fields).map(([key, label]) => (
-              <Field key={key} label={label} value={form[key]} onChange={(v) => updateField(key, v)} />
-            ))}
-          </div>
-          <p className="mt-3 text-xs text-neutral-500">{i18n.note}</p>
-          <button
-            type="submit"
-            className="mt-4 w-full rounded-xl bg-black px-4 py-3 text-white font-semibold hover:bg-black/90"
-          >
-            {i18n.ctas.form}
-          </button>
-        </form>
-      </section>
+    const subject = encodeURIComponent(`New Property Submission from ${entries.name || "Seller"}`);
+    const body = encodeURIComponent(`
+Name: ${entries.name}
+Email: ${entries.email}
+Phone: ${entries.phone}
+
+Address: ${entries.address}, ${entries.city}, ${entries.state}, ${entries.zip}
+
+Condition: ${entries.condition}
+Timeline: ${entries.timeline}
+Asking Price: ${entries.price}
+
+Notes:
+${entries.notes}
+    `);
+
+    // 👇 This opens the user's default email app
+    window.location.href = `mailto:jiacqventures@gmail.com?subject=${subject}&body=${body}`;
+  }}
+  className="grid sm:grid-cols-2 gap-3"
+>
+  {Object.entries(i18n.fields).map(([key, label]) => (
+    <Field key={key} label={label} value={form[key]} onChange={(v) => updateField(key, v)} />
+  ))}
+
+  <p className="mt-3 text-xs text-neutral-500">{i18n.note}</p>
+
+  <button
+    type="submit"
+    className="mt-4 w-full rounded-xl bg-black px-4 py-3 text-white font-semibold hover:bg-black/90"
+  >
+    {i18n.ctas.form}
+  </button>
+</form>
+
  {/* About Section */}
 <section className="max-w-6xl mx-auto px-4 py-12 text-center">
   <h2 className="text-2xl font-bold mb-4">About RES915</h2>
