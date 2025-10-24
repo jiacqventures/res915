@@ -199,6 +199,7 @@ ${entries.notes}
     {i18n.ctas.form}
   </button>
 </form>
+</section>
 
  {/* About Section */}
 <section className="max-w-6xl mx-auto px-4 py-12 text-center">
