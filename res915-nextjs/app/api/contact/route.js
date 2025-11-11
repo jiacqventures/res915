@@ -1,7 +1,5 @@
 export async function POST(req) {
-  const formData = await req.formData();
-  const entries = Object.fromEntries(formData.entries());
-
+  const entries = await req.json();
   // Build the mailto link dynamically
   const subject = encodeURIComponent(`New Property Submission from ${entries.name || "Seller"}`);
   const body = encodeURIComponent(
