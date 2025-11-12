@@ -16,6 +16,27 @@ export default function Home() {
     price: '',
     notes: '',
   });
+  // Handle form submission and open the user's email app
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const body = encodeURIComponent(`
+Name: ${form.name}
+Email: ${form.email}
+Phone: ${form.phone}
+Address: ${form.address}, ${form.city}, ${form.state}, ${form.zip}
+Condition: ${form.condition}
+Timeline: ${form.timeline}
+Asking Price: ${form.price}
+Notes: ${form.notes}
+    `);
+
+    const subject = encodeURIComponent(
+      `New Property Submission from ${form.name || "Seller"}`
+    );
+
+    window.location.href = `mailto:jiacqventures@gmail.com?subject=${subject}&body=${body}`;
+  };
 
   const i18n = {
     en: {
@@ -158,37 +179,17 @@ export default function Home() {
 
       {/* Offer Form */}
       <section id="offer" className="max-w-6xl mx-auto px-4 pb-10">
-      <form
-  onSubmit={(e) => {
-    e.preventDefault();
-
-    const data = new FormData(e.target);
-    const entries = Object.fromEntries(data.entries());
-
-    const subject = encodeURIComponent(`New Property Submission from ${entries.name || "Seller"}`);
-    const body = encodeURIComponent(`
-Name: ${entries.name}
-Email: ${entries.email}
-Phone: ${entries.phone}
-
-Address: ${entries.address}, ${entries.city}, ${entries.state}, ${entries.zip}
-
-Condition: ${entries.condition}
-Timeline: ${entries.timeline}
-Asking Price: ${entries.price}
-
-Notes:
-${entries.notes}
-    `);
-
-    // 👇 This opens the user's default email app
-    window.location.href = `mailto:jiacqventures@gmail.com?subject=${subject}&body=${body}`;
-  }}
-  className="grid sm:grid-cols-2 gap-3"
->
-  {Object.entries(i18n.fields).map(([key, label]) => (
-    <Field key={key} label={label} value={form[key]} onChange={(v) => updateField(key, v)} />
-  ))}
+  <form onSubmit={handleSubmit} className="max-w-6xl mx-auto px-4 pb-10">
+  <div className="grid sm:grid-cols-2 gap-3">
+    {Object.entries(i18n.fields).map(([key, label]) => (
+      <Field
+        key={key}
+        label={label}
+        value={form[key]}
+        onChange={(v) => updateField(key, v)}
+      />
+    ))}
+  </div>
 
   <p className="mt-3 text-xs text-neutral-500">{i18n.note}</p>
 
