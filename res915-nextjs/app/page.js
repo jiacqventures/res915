@@ -16,27 +16,39 @@ export default function Home() {
     price: '',
     notes: '',
   });
-  // Handle form submission and open the user's email app
-  const handleSubmit = (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const body = encodeURIComponent(`
-Name: ${form.name}
-Email: ${form.email}
-Phone: ${form.phone}
-Address: ${form.address}, ${form.city}, ${form.state}, ${form.zip}
-Condition: ${form.condition}
-Timeline: ${form.timeline}
-Asking Price: ${form.price}
-Notes: ${form.notes}
-    `);
+  try {
+    const response = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
 
-    const subject = encodeURIComponent(
-      `New Property Submission from ${form.name || "Seller"}`
-    );
-
-    window.location.href = `mailto:jiacqventures@gmail.com?subject=${subject}&body=${body}`;
-  };
+    if (response.ok) {
+      alert("✅ Your info was sent successfully!");
+      setForm({
+        name: "",
+        email: "",
+        phone: "",
+        address: "",
+        city: "",
+        state: "",
+        zip: "",
+        condition: "",
+        timeline: "",
+        price: "",
+        notes: "",
+      });
+    } else {
+      alert("⚠️ Something went wrong. Please try again later.");
+    }
+  } catch (error) {
+    console.error("Error submitting form:", error);
+    alert("❌ Failed to send. Please try again.");
+  }
+};
 
   const i18n = {
     en: {
