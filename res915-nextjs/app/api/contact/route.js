@@ -33,7 +33,6 @@ Asking Price: ${price}
 Notes: ${notes}
 `;
 
-    // Send email using Resend
     await resend.emails.send({
       from: "RES915 <onboarding@resend.dev>",
       to: "jiacqventures@gmail.com",
