@@ -1,25 +1,49 @@
+import { NextResponse } from "next/server";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 export async function POST(req) {
-  const entries = await req.json();
-  // Build the mailto link dynamically
-  const subject = encodeURIComponent(`New Property Submission from ${entries.name || "Seller"}`);
-  const body = encodeURIComponent(
-    `
-Name: ${entries.name}
-Email: ${entries.email}
-Phone: ${entries.phone}
+  try {
+    const formData = await req.json();
+    const {
+      name,
+      email,
+      phone,
+      address,
+      city,
+      state,
+      zip,
+      condition,
+      timeline,
+      price,
+      notes,
+    } = formData;
 
-Address: ${entries.address}, ${entries.city}, ${entries.state}, ${entries.zip}
+    const body = `
+New Property Submission:
 
-Condition: ${entries.condition}
-Timeline: ${entries.timeline}
-Asking Price: ${entries.price}
+Name: ${name}
+Email: ${email}
+Phone: ${phone}
+Address: ${address}, ${city}, ${state}, ${zip}
+Condition: ${condition}
+Timeline: ${timeline}
+Asking Price: ${price}
+Notes: ${notes}
+`;
 
-Notes:
-${entries.notes}
-    `
-  );
+    // Send email using Resend
+    await resend.emails.send({
+      from: "RES915 <onboarding@resend.dev>",
+      to: "jiacqventures@gmail.com",
+      subject: `New Property Submission from ${name || "Seller"}`,
+      text: body,
+    });
 
-  // Redirect to open user's email app
-  const mailto = `mailto:jiacqventures@gmail.com?subject=${subject}&body=${body}`;
-return Response.redirect(mailto, 302);
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Error sending email:", error);
+    return NextResponse.json({ error: "Failed to send email" }, { status: 500 });
+  }
 }
