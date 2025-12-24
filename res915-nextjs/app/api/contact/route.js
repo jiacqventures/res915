@@ -20,29 +20,31 @@ export async function POST(req) {
       notes,
     } = formData;
 
+    // Build the email body
     const body = `
-New Property Submission:
+      🏡 New Property Submission:
 
-Name: ${name}
-Email: ${email}
-Phone: ${phone}
-Address: ${address}, ${city}, ${state}, ${zip}
-Condition: ${condition}
-Timeline: ${timeline}
-Asking Price: ${price}
-Notes: ${notes}
-`;
+      Name: ${name}
+      Email: ${email}
+      Phone: ${phone}
+      Address: ${address}, ${city}, ${state} ${zip}
+      Condition: ${condition}
+      Timeline: ${timeline}
+      Price: ${price}
+      Notes: ${notes}
+    `;
 
-    await resend.emails.send({
-      from: "RES915 <onboarding@resend.dev>",
-      to: "jiacqventures@gmail.com",
-      subject: `New Property Submission from ${name || "Seller"}`,
+    // Send email via Resend
+    const data = await resend.emails.send({
+      from: "RES915 <contact@res915.com>", // Must match your verified domain
+      to: "jiacqventures@gmail.com",       // Your receiving inbox
+      subject: "New Property Submission from RES915",
       text: body,
     });
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, data });
   } catch (error) {
-    console.error("Error sending email:", error);
-    return NextResponse.json({ error: "Failed to send email" }, { status: 500 });
+    console.error(error);
+    return NextResponse.json({ success: false, error });
   }
 }
