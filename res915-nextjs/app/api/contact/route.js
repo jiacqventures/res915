@@ -4,8 +4,9 @@ import { Resend } from "resend";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req) {
-    console.log("📨 Contact form API called!");
   try {
+    console.log("📨 Contact form API called!");
+
     const formData = await req.json();
     const {
       name,
@@ -34,21 +35,20 @@ Price: ${price}
 Notes: ${notes}
 `;
 
-    // ✅ Important: must match your verified domain
- console.log("⚡ Sending email through Resend...");
+    console.log("⚡ Sending email via Resend...");
 
-const data = await resend.emails.send({
-  from: "RES915 <send@res915.com>",
-  to: "jiacqventures@gmail.com",
-  subject: "New Property Submission from RES915",
-  text: body,
-});
+    const data = await resend.emails.send({
+      from: "RES915 <send@res915.com>",
+      to: "jiacqventures@gmail.com",
+      subject: "New Property Submission from RES915",
+      text: body,
+    });
 
-console.log("✅ Resend response:", data);
+    console.log("✅ Resend response:", data);
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    console.error("Resend error:", error);
+    console.error("❌ Resend error:", error);
     return NextResponse.json({ success: false, error: error.message });
   }
 }
