@@ -36,7 +36,7 @@ export async function POST(req) {
 
     // Send email via Resend
     const data = await resend.emails.send({
-      from: "RES915 <contact@res915.com>", // Must match your verified domain
+     from: "RES915 <send@res915.com>", // Must match your verified domain
       to: "jiacqventures@gmail.com",       // Your receiving inbox
       subject: "New Property Submission from RES915",
       text: body,
