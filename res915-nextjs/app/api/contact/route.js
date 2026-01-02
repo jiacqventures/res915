@@ -20,31 +20,30 @@ export async function POST(req) {
       notes,
     } = formData;
 
-    // Build the email body
     const body = `
-      🏡 New Property Submission:
+🏠 New Property Submission:
 
-      Name: ${name}
-      Email: ${email}
-      Phone: ${phone}
-      Address: ${address}, ${city}, ${state} ${zip}
-      Condition: ${condition}
-      Timeline: ${timeline}
-      Price: ${price}
-      Notes: ${notes}
-    `;
+Name: ${name}
+Email: ${email}
+Phone: ${phone}
+Address: ${address}, ${city}, ${state} ${zip}
+Condition: ${condition}
+Timeline: ${timeline}
+Price: ${price}
+Notes: ${notes}
+`;
 
-    // Send email via Resend
+    // ✅ Important: must match your verified domain
     const data = await resend.emails.send({
-     from: "RES915 <send@res915.com>", // Must match your verified domain
-      to: "jiacqventures@gmail.com",       // Your receiving inbox
+      from: "RES915 <send@res915.com>",
+      to: "jiacqventures@gmail.com",
       subject: "New Property Submission from RES915",
       text: body,
     });
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    console.error(error);
-    return NextResponse.json({ success: false, error });
+    console.error("Resend error:", error);
+    return NextResponse.json({ success: false, error: error.message });
   }
 }
