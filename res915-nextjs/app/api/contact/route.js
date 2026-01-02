@@ -35,12 +35,16 @@ Notes: ${notes}
 `;
 
     // ✅ Important: must match your verified domain
-    const data = await resend.emails.send({
-      from: "RES915 <send@res915.com>",
-      to: "jiacqventures@gmail.com",
-      subject: "New Property Submission from RES915",
-      text: body,
-    });
+ console.log("⚡ Sending email through Resend...");
+
+const data = await resend.emails.send({
+  from: "RES915 <send@res915.com>",
+  to: "jiacqventures@gmail.com",
+  subject: "New Property Submission from RES915",
+  text: body,
+});
+
+console.log("✅ Resend response:", data);
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
